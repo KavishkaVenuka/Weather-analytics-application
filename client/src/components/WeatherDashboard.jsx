@@ -6,29 +6,71 @@ import CityCard from './CityCard.jsx';
 const WeatherDashboard = () => {
     const [viewMode, setViewMode] = useState('podium');
     const [cities, setCities] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Sample Data (Simulating backend response)
     useEffect(() => {
-        // TODO: Replace sample data with API call to backend
-        // Backend returns cities with pre-calculated scores and ranks
-        // const response = await fetch('/api/cities/rankings');
-        // const cities = await response.json();
+        const fetchWeatherData = async () => {
+            try {
+                // Fetch data from our backend
+                const response = await fetch('http://localhost:5000/api/weather');
 
-        const mockData = [
-            { id: 1, name: "San Diego", country: "USA", temp: 22, description: "Clear sky", score: 92, rank: 1 },
-            { id: 2, name: "Barcelona", country: "Spain", temp: 24, description: "Partly cloudy", score: 88, rank: 2 },
-            { id: 3, name: "Lisbon", country: "Portugal", temp: 21, description: "Sunny", score: 85, rank: 3 },
-            { id: 4, name: "Sydney", country: "Australia", temp: 23, description: "Clear sky", score: 82, rank: 4 },
-            { id: 5, name: "Vancouver", country: "Canada", temp: 18, description: "Light rain", score: 78, rank: 5 },
-            { id: 6, name: "Tokyo", country: "Japan", temp: 20, description: "Cloudy", score: 75, rank: 6 },
-            { id: 7, name: "Auckland", country: "New Zealand", temp: 19, description: "Partly cloudy", score: 72, rank: 7 },
-            { id: 8, name: "Seattle", country: "USA", temp: 16, description: "Rainy", score: 68, rank: 8 },
-            { id: 9, name: "London", country: "UK", temp: 15, description: "Overcast", score: 65, rank: 9 },
-            { id: 10, name: "Oslo", country: "Norway", temp: 12, description: "Cloudy", score: 60, rank: 10 }
-        ];
+                if (!response.ok) {
+                    throw new Error('Failed to fetch weather data');
+                }
 
-        setCities(mockData);
+                const result = await response.json();
+
+                if (result.success && result.data && result.data.list) {
+                    // Map backend data to frontend model
+                    const mappedCities = result.data.list.map(item => ({
+                        id: item.id,
+                        name: item.name,
+                        country: item.country, // Ensure this field exists in backend or handle missing
+                        temp: Math.round(item.temp),
+                        description: item.weather.description.charAt(0).toUpperCase() + item.weather.description.slice(1),
+                        score: item.comfort ? item.comfort.score : 0,
+                        rank: 0, // Placeholder, calculated below
+                        label: item.comfort ? item.comfort.label : 'Unknown'
+                    }));
+
+                    // Sort by Comfort Score (Descending) -> The most comfortable city is Rank 1
+                    mappedCities.sort((a, b) => b.score - a.score);
+
+                    // Assign Ranks
+                    const rankedCities = mappedCities.map((city, index) => ({
+                        ...city,
+                        rank: index + 1
+                    }));
+
+                    setCities(rankedCities);
+                }
+            } catch (err) {
+                console.error("Error loading weather data:", err);
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchWeatherData();
     }, []);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-500"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+                <div className="text-red-500 font-medium">Error: {error}</div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 relative selection:bg-brand-500/30">
