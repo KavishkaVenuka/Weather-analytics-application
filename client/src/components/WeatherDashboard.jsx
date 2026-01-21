@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
 import Header from './Header.jsx';
 import PodiumView from './PodiumView.jsx';
 import CityCard from './CityCard.jsx';
 
 const WeatherDashboard = () => {
+    const { getAccessTokenSilently } = useAuth0();
     const [viewMode, setViewMode] = useState('podium');
     const [cities, setCities] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,11 +14,17 @@ const WeatherDashboard = () => {
     useEffect(() => {
         const fetchWeatherData = async () => {
             try {
+                const token = await getAccessTokenSilently();
+
                 // Fetch data from our backend
-                const response = await fetch('http://localhost:5000/api/weather');
+                const response = await fetch('http://localhost:5000/api/weather', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch weather data');
+                    throw new Error(`Failed to fetch weather data (Status: ${response.status})`);
                 }
 
                 const result = await response.json();

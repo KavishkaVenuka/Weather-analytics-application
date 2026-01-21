@@ -8,7 +8,10 @@ function App() {
 
     // Redirect to Auth0 Universal Login if not authenticated
     useEffect(() => {
-        if (!isLoading && !isAuthenticated) {
+        const queryParams = new URLSearchParams(window.location.search);
+        const hasError = queryParams.has('error');
+
+        if (!isLoading && !isAuthenticated && !hasError) {
             loginWithRedirect();
         }
     }, [isLoading, isAuthenticated, loginWithRedirect]);

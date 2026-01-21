@@ -15,8 +15,16 @@ app.use(express.json());
 
 const weatherRoutes = require('./routes/weatherRoutes');
 
+const { auth } = require('express-oauth2-jwt-bearer');
+
+const checkJwt = auth({
+    audience: 'weather',
+    issuerBaseURL: 'https://dev-5z13ny3t3ert21qz.us.auth0.com/',
+    tokenSigningAlg: 'RS256'
+});
+
 // Routes
-app.use('/api/weather', weatherRoutes);
+app.use('/api/weather', checkJwt, weatherRoutes);
 
 
 // Start server
