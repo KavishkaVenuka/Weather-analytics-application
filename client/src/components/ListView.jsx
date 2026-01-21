@@ -34,7 +34,7 @@ const ListView = ({ cities }) => {
 
                                 {/* Temperature */}
                                 <div className="text-center min-w-[100px] hidden sm:block">
-                                    <div className="text-xl font-bold text-gray-900">{city.temp}°C</div>
+                                    <div className="text-xl font-bold text-rose-500">{city.temp}°C</div>
                                     <div className="text-xs text-gray-400 font-bold uppercase tracking-wide">Temperature</div>
                                 </div>
 
@@ -43,7 +43,7 @@ const ListView = ({ cities }) => {
 
                                 {/* Condition */}
                                 <div className="text-center min-w-[120px] hidden sm:block">
-                                    <div className="text-gray-900 font-medium truncate px-2">{city.description}</div>
+                                    <div className="text-sky-500 font-bold truncate px-2">{city.description}</div>
                                     <div className="text-xs text-gray-400 font-bold uppercase tracking-wide">Condition</div>
                                 </div>
                             </div>
@@ -52,11 +52,11 @@ const ListView = ({ cities }) => {
                             <div className="flex sm:hidden w-full justify-between items-center bg-gray-50/50 rounded-lg p-3">
                                 <div>
                                     <span className="text-gray-400 text-[10px] uppercase font-bold">Temp</span>
-                                    <div className="font-bold text-gray-900">{city.temp}°C</div>
+                                    <div className="font-bold text-rose-500">{city.temp}°C</div>
                                 </div>
                                 <div className="text-right">
                                     <span className="text-gray-400 text-[10px] uppercase font-bold">Condition</span>
-                                    <div className="font-medium text-gray-900">{city.description}</div>
+                                    <div className="font-bold text-sky-500">{city.description}</div>
                                 </div>
                             </div>
 

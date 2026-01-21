@@ -74,13 +74,13 @@ const PremiumPodiumCard = ({ city, isWinner = false, isSecond = false, isThird =
             {/* Footer: Stats Grid */}
             <div className="mt-auto grid grid-cols-2 gap-4 relative z-10">
                 <div className="flex flex-col items-center p-3 rounded-2xl bg-white/60 backdrop-blur-md border border-white/40 shadow-sm group-hover:bg-white/80 transition-colors">
-                    <Thermometer className="w-5 h-5 text-gray-400 mb-1" />
-                    <span className="font-bold text-gray-900 text-lg">{city.temp}°C</span>
+                    <Thermometer className="w-5 h-5 text-rose-500 mb-1" />
+                    <span className="font-bold text-gray-700 text-lg">{city.temp}°C</span>
                     <span className="text-[10px] text-gray-400 uppercase font-bold">Temp</span>
                 </div>
                 <div className="flex flex-col items-center p-3 rounded-2xl bg-white/60 backdrop-blur-md border border-white/40 shadow-sm group-hover:bg-white/80 transition-colors">
-                    <CloudSun className="w-5 h-5 text-gray-400 mb-1" />
-                    <span className="font-bold text-gray-900 text-sm truncate w-full text-center px-1">{city.description}</span>
+                    <CloudSun className="w-5 h-5 text-sky-500 mb-1" />
+                    <span className="font-bold text-gray-700 text-sm truncate w-full text-center px-1">{city.description}</span>
                     <span className="text-[10px] text-gray-400 uppercase font-bold">Condition</span>
                 </div>
             </div>

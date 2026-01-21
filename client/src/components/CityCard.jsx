@@ -38,19 +38,19 @@ const CityCard = ({ city }) => {
             {/* Stats Grid */}
             <div className="relative grid grid-cols-2 gap-3 mb-6">
                 <div className="flex flex-col p-3 rounded-2xl bg-white/50 border border-white/40 hover:bg-white/80 transition-colors group/stat">
-                    <div className="flex items-center gap-2 mb-2 text-gray-400 group-hover/stat:text-blue-500 transition-colors">
+                    <div className="flex items-center gap-2 mb-2 text-rose-500 group-hover/stat:text-rose-600 transition-colors">
                         <Thermometer className="w-4 h-4" />
                         <span className="text-[10px] font-bold uppercase tracking-wider">Temp</span>
                     </div>
-                    <span className="text-xl font-bold text-gray-800">{city.temp}°</span>
+                    <span className="text-xl font-bold text-gray-700">{city.temp}°</span>
                 </div>
 
                 <div className="flex flex-col p-3 rounded-2xl bg-white/50 border border-white/40 hover:bg-white/80 transition-colors group/stat">
-                    <div className="flex items-center gap-2 mb-2 text-gray-400 group-hover/stat:text-indigo-500 transition-colors">
+                    <div className="flex items-center gap-2 mb-2 text-sky-500 group-hover/stat:text-sky-600 transition-colors">
                         <Wind className="w-4 h-4" />
                         <span className="text-[10px] font-bold uppercase tracking-wider">Cond</span>
                     </div>
-                    <span className="text-sm font-bold text-gray-800 truncate" title={city.description}>
+                    <span className="text-sm font-bold text-gray-700 truncate" title={city.description}>
                         {city.description}
                     </span>
                 </div>
